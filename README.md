@@ -1,33 +1,62 @@
 # Linkr-clone
+*--------------------------------------------------------
 * Application tree.
 *--------------------------------------------------------
-* Core
-* 	1. #database
-		a. config.php
-		b. db.php
+# css
+# fonts
+# js
+# images
+
+* README.MD
+* index.php
+* 404.php
+
+
+
+
+/*
+* Models
+**/
+# Core
+ 	1. #database
+		i. 	config.php
+		ii. db.php
 	2. #functions
-		a. func_global.php
-		b. func_user.php
-	3. #helperClass
+		i.  func_global.php
+		ii. func_user.php
+	3. #helperClasses
 	4. init.php
-* views
+
+
+
+
+/*
+* Views
+**/
+# views
 	1. #admin
-		a. layout.php
-	2. #user (login & registration)
-		a. layout.php
-		b. login.view.php
-		c. registration.view.php
-		d. activation.view.php
-		e. profile.view.php
-	3. #activity
-		a. layout.php
-		b. index.view.php
+		i.  layout.php
+	2. #users (login & registration)
+		i.  layout.php
+		ii. login.view.php
+		iii.registration.view.php
+		iv. activation.view.php
+		v. 	profile.view.php
+	3. #activities
+		i. 	layout.php
+
+
+
+
+
+/*
 * controllers
-	1. admin
-	2. user
-		a. login.php
-		b. registration.php
-		c. activation.php
-		d. profile.php
-	3. activity
-		a. index.php.
+**/
+# users
+	# admin
+	i. 	login.php
+	ii. registration.php
+	iii.activation.php
+	iv. profile.php
+# activities
+	a. index.php.

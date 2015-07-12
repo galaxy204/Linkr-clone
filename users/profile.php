@@ -7,22 +7,20 @@
 		<meta content="width=device-width, initial-scale=1" name="viewport">
 		
 		
-		<link rel="stylesheet" href="css/bootstrap.css" />
-		<link rel="stylesheet" href="css/bootstrap.min.css" />
-		<link rel="stylesheet" href="css/main.css" />
+		<link rel="stylesheet" href="../css/bootstrap.css" />
+		<link rel="stylesheet" href="../css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../css/main.css" />
 		
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 		
-		<link rel="stylesheet" href="css/font-awesome.min.css" />
+		<link rel="stylesheet" href="../css/font-awesome.min.css" />
 		
 		<!--[if IE 7]>
 			<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome-ie7.min.css">
 		<![endif]-->
 
 	</head>
-	<body>
-		
-		
+	<body>		
 		
 		<div id="main_area">
 		
@@ -151,7 +149,7 @@
 							<!--- start avater_area -->
 							<div class="col-sm-2 col-sm-offset-2" id="avatar_pic_area">
 							
-								<img src="img/2.jpg" alt="" />
+								<img src="../images/2.jpg" alt="" />
 							
 							</div>
 							<!--- end avater_pic_area -->
