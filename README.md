@@ -1,6 +1,7 @@
 # Linkr-clone
 *--------------------------------------------------------
 * Application tree.
+*
 *--------------------------------------------------------
 # css
 # fonts
@@ -73,4 +74,4 @@
 	v. 	activation.php
 
 # activities
-	a. index.php.
+	i. index.php.
