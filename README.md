@@ -1,11 +1,14 @@
 # Linkr-clone
 *--------------------------------------------------------
 * Application tree.
-*
 *--------------------------------------------------------
 # css
 # fonts
 # js
+	i. ajax.js
+	ii. 	bootstrap.js
+	iii. 	bootstrap.min.js
+	iv. 	main.js
 # images
 
 * README.MD

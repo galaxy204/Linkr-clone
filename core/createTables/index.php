@@ -3,7 +3,7 @@ include_once("../init.php");
 
 $tbl_users = "CREATE TABLE IF NOT EXISTS users (
               id INT(11) NOT NULL AUTO_INCREMENT,
-			  username VARCHAR(16) NOT NULL,
+			  username VARCHAR(32) NOT NULL,
 			  email VARCHAR(255) NOT NULL,
 			  email_perm ENUM('0','1') NULL DEFAULT '0',
 			  password VARCHAR(255) NOT NULL,
@@ -15,8 +15,8 @@ $tbl_users = "CREATE TABLE IF NOT EXISTS users (
 			  signup DATETIME NOT NULL,
 			  lastlogin DATETIME NOT NULL,
 			  notescheck DATETIME NOT NULL,
-			  activated ENUM('0','1') NOT NULL DEFAULT '0',
+			  activated ENUM('0','1') NOT NULL DEFAULT '1',
               PRIMARY KEY (id),
-			  UNIQUE KEY username (username,email)
+			  UNIQUE KEY (username,email)
              )";
 query($conn, $tbl_users);

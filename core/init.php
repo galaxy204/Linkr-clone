@@ -1,4 +1,5 @@
-<?php 
+<?php
+session_start(); 
 require_once ('database/db.php');
 require_once ('functions/func_global.php');
 

@@ -35,7 +35,7 @@
 					
 						<div class="logo">
 							
-							<h1><a href="#">Linker</a></h1>
+							<h1><a href="/Linkr-clone">Linker</a></h1>
 						
 						</div>
 						
@@ -59,7 +59,7 @@
 							<!-- Collect the nav links, forms, and other content for toggling -->
 							<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 							  <ul class="nav navbar-nav">
-									<li class=""><a href="#"><i class="fa fa-home"></i> Home</a></li>
+									<li class=""><a href="/Linkr-clone"><i class="fa fa-home"></i> Home</a></li>
 									<li class="menu_two"><a href="#"><i class="fa fa-users"></i> People </a></li>
 									<li class="menu_three"><a href="#"><i class="fa fa-tasks"></i> Tasks</a></li>
 									<li class="menu_four"><a href="#"><i class="fa fa-calendar"></i> Calender</a></li>
@@ -78,11 +78,11 @@
 										<a class="dropdown-toggle" data-toggle="dropdown" href=""><i class="fa fa-user"></i><span class="caret"></span></a>
 										<ul class="dropdown-menu " aria-expanded="false" >
 											<li>
-												<a class="ng-binding" href="#">My profile</a>
+												<a class="ng-binding" href="/Linkr-clone/users/profile.php">My profile</a>
 											</li>
 											<li class="divider"></li>
 											<li>
-												<a class="ng-binding" href="#">Logout</a>
+												<a class="ng-binding" href="/Linkr-clone/users/signout.php">Logout</a>
 											</li>
 										</ul>
 									</li>

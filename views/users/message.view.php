@@ -5,9 +5,9 @@
 					</div>				
 				</div>
 			</div>
-			
-			
-			
+
+
+
 			<!-- start my profile area -->
 			<div class="container-fluid" id="message_area">
 			
@@ -24,12 +24,11 @@
 							
 							<li role="presentation" class="active"><a href="#">Inbox</a></li>
 							<li role="presentation" ><a href="#">Sent</a></li>
-							
-						
+
 						</ul>
+
 						<button class="btn btn-xxs btn-primary btn-block" >New message</button>
-					</div>
-					<!-- end  left menu  -->
+					</div> <!-- end  left menu  -->
 					
 					
 					<!-- start  right_form  -->
@@ -91,9 +90,6 @@
 							
 							</table>						
 						
-						
-						
-						
 						</div>
 						
 					
@@ -108,9 +104,6 @@
 			
 			
 			</div>
-			
-			
-			
 			
 			<!-- end my profile area -->
 			
