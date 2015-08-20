@@ -45,17 +45,23 @@ if(isset($_POST["e"])){
         	exit();
         } else {
         	$db_data = query($conn,
-        					"SELECT id, username, password FROM users WHERE email = :email AND password = :password",
+        					"SELECT id, username, fullname, avatar, password, time FROM users WHERE email = :email AND password = :password",
         					array('email' => $e, 'password' => $p))[0];
 
         	$db_id = $db_data['id'];
 	        $db_username = $db_data['username'];
+	        $db_fullname = $db_data['fullname'];
+	        $db_avatar = $db_data['avatar'];
 	        $db_password = $db_data['password'];
+	        $db_time = $db_data['time'];
         	
         	// CREATE THEIR SESSIONS AND COOKIES
         	$_SESSION['userid'] = $db_id;
 			$_SESSION['username'] = $db_username;
+			$_SESSION['fullname'] = $db_fullname;
+			$_SESSION['avatar'] = $db_avatar;
 			$_SESSION['password'] = $db_password;
+			$_SESSION['time'] = $db_time;
 
 			// setcookie("id", $db_id, strtotime( '+30 days' ), "/", "", "", TRUE);
 			// setcookie("user", $db_username, strtotime( '+30 days' ), "/", "", "", TRUE);
@@ -74,33 +80,4 @@ if(isset($_POST["e"])){
 }
 ?>
 
-<script src="../js/ajax.js"></script>
-<script src="../js/main.js"></script>
-
-<script>
-function signin()
-{
-	var e = _("email").value;
-	var p = _("password").value;
-	if(e == "" || p == ""){
-		_("status").innerHTML = "Fill out all of the form data";
-	} else {
-		_("signinbtn").style.display = "none";
-		_("status").innerHTML = 'please wait ...';
-		var ajax = ajaxObj("POST", "signin.php");
-        ajax.onreadystatechange = function() {
-	        if(ajaxReturn(ajax) == true) {
-	            if(ajax.responseText == "ok"){
-					window.location = "../index.php";
-				} else {
-					_("signinbtn").style.display = "block";
-					_("status").innerHTML = ajax.responseText;
-				}
-	        }
-        }
-        ajax.send("e="+e+"&p="+p);
-	}
-}
-</script>
-
-<?php view('users/signin', 'layout-signin');  ?>
+<?php view('users/signin', array(), 'layout-signin');  ?>

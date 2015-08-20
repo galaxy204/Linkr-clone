@@ -57,7 +57,7 @@ if(isset($_POST["emailcheck"])){
 if(isset($_POST["u"])){
 	// GATHER THE POSTED DATA INTO LOCAL VARIABLES
 	$fl = htmlspecialchars( preg_replace('#[^a-z0-9 ]#i', '', trim( $_POST['fl']) ) );
-	$po = htmlspecialchars( preg_replace('#[^a-z0-9 ]#i', '', trim( $_POST['po']) ) );
+	$po = htmlspecialchars( preg_replace('#[^a-z0-9 .]#i', '', trim( $_POST['po']) ) );
 	$u  = htmlspecialchars( preg_replace('#[^a-z0-9_]#i', '', trim( $_POST['u']) ) );
 	$e  = htmlspecialchars( trim( ($_POST['e']) ) );
 	$ep = htmlspecialchars( $_POST['ep'] );
@@ -115,28 +115,51 @@ if(isset($_POST["u"])){
 		$p_hash = md5($p);
 		// Add user info into the database table for the main site table
 
-		query($conn,
-				"INSERT INTO users 	(username, email, email_perm, password, fullname, position, ip, signup, lastlogin, notescheck) values(:username, :email, :email_perm, :password, :fullname, :position, :ip, NOW(), NOW(), NOW() )",
-				array('username' => $u, 'email' => $e, 'email_perm' => $ep, 'password' => $p_hash, 'fullname' => $fl, 'position' => $po, 'ip' => $ip ));
+		$time = trim(microtime());
+		$insert = query_insert($conn,
+				"INSERT INTO users 	(username, email, email_perm, password, fullname, position, ip, signup, lastlogin, notescheck, time) values(:username, :email, :email_perm, :password, :fullname, :position, :ip, NOW(), NOW(), NOW(), :time )",
+				array('username' => $u, 'email' => $e, 'email_perm' => $ep, 'password' => $p_hash, 'fullname' => $fl, 'position' => $po, 'ip' => $ip, 'time' => $time ));
 		
 		// Create directory(folder) to hold each user's files(pics, MP3s, etc.)
-		if (!file_exists("user/$u")) {
-			mkdir("user_files/$u", 0755);
+		if ( $insert ) {
+			
+		
+			$user_and_time = query($conn,
+									"SELECT id, username, time FROM users WHERE username = :username AND email = :email",
+									array('username' => $u, 'email' => $e))[0];
+			$u = $user_and_time['username'];
+			$time = $user_and_time['time'];
+			$user_id = $user_and_time['id'];
+			if (!file_exists("user/$u")) {
+				mkdir("users_files/" . $u . $time, 0755);
+			}
+
+			$insert_notifications_msg = query_insert($conn,
+											"INSERT INTO notifications (user_id, event) VALUES(:user_id, :event)",
+											array('user_id' => $user_id, 'event' => 'message'));
+			$insert_notifications_email = query_insert($conn,
+											"INSERT INTO notifications (user_id, event) VALUES(:user_id, :event)",
+											array('user_id' => $user_id, 'event' => 'email'));
+			if ( !$insert_notifications_msg && !$insert_notifications_email) {
+				echo "Some error has been occured!";
+				exit;
+			}
+
+			// Email the user their activation link
+			$to = "$e";							 
+			$from = "tanvir@vcampusplus.com";
+			$subject = 'yoursitename Account Activation';
+			$message = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>yoursitename Message</title></head><body style="margin:0px; font-family:Tahoma, Geneva, sans-serif;"><div style="padding:10px; background:#333; font-size:24px; color:#CCC;"><a href="http://www.yoursitename.com"><img src="http://www.yoursitename.com/images/logo.png" width="36" height="30" alt="yoursitename" style="border:none; float:left;"></a>yoursitename Account Activation</div><div style="padding:24px; font-size:17px;">Hello '.$u.',<br /><br />Click the link below to activate your account when ready:<br /><br /><a href="'. url('/users') .'/activation.php?u='.$u.'&e='.$e.'&p='.$p_hash.'">Click here to activate your account now</a><br /><br />Login after successful activation using your:<br />* E-mail Address: <b>'.$e.'</b></div></body></html>';
+			$headers = "From: $from\n";
+	        $headers .= "MIME-Version: 1.0\n";
+	        $headers .= "Content-type: text/html; charset=iso-8859-1\n";
+			mail($to, $subject, $message, $headers);
+
+			echo 1;
+			exit();
+		} else {
+			echo "string";
 		}
-
-
-		// Email the user their activation link
-		$to = "$e";							 
-		$from = "auto_responder@linkr.com";
-		$subject = 'yoursitename Account Activation';
-		$message = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>yoursitename Message</title></head><body style="margin:0px; font-family:Tahoma, Geneva, sans-serif;"><div style="padding:10px; background:#333; font-size:24px; color:#CCC;"><a href="http://www.yoursitename.com"><img src="http://www.yoursitename.com/images/logo.png" width="36" height="30" alt="yoursitename" style="border:none; float:left;"></a>yoursitename Account Activation</div><div style="padding:24px; font-size:17px;">Hello '.$u.',<br /><br />Click the link below to activate your account when ready:<br /><br /><a href="http://www.yoursitename.com/activation.php?u='.$u.'&e='.$e.'&p='.$p_hash.'">Click here to activate your account now</a><br /><br />Login after successful activation using your:<br />* E-mail Address: <b>'.$e.'</b></div></body></html>';
-		$headers = "From: $from\n";
-        $headers .= "MIME-Version: 1.0\n";
-        $headers .= "Content-type: text/html; charset=iso-8859-1\n";
-		mail($to, $subject, $message, $headers);
-
-		echo 1;
-		exit();
 	}
 	exit();
 }
@@ -242,4 +265,4 @@ function signup()
 }
 </script> 
 
-<?php view('users/signup', 'layout-signin'); ?>
+<?php view('users/signup', array(), 'layout-signin'); ?>

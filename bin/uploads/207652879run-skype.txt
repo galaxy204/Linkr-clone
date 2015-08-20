@@ -1,0 +1,2 @@
+LD_LIBRARY_PATH=/usr/lib/i386-linux-gnu/ PULSE_LATENCY_MSEC=30 /usr/bin/skype
+

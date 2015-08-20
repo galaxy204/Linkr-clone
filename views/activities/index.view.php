@@ -42,7 +42,7 @@
 							</div>
 							<div class="col-sm-12" id="info-middle">
 							
-								<button class="btn btn-default">Create a new space</button>
+								<button class="btn btn-default create-pop">Create a new space</button>
 								
 							</div>
 							<div class="col-sm-12" id="info-bottom">
@@ -392,3 +392,134 @@
 			</div> <!-- end row -->
 
 		</div> <!-- end container -->
+
+<!-- start new space form -->
+<div class="space-form">
+
+	<h4>New space</h4>
+	
+	
+	<form action="" method="POST" role="form" id="new-space-form">
+			<div class="ajax-result">
+				<div id="result"></div>
+			</div>
+
+			<input type="text" class="form-control" id="title-for-space" name="title" placeholder="Title" required>
+
+	 		<br>
+
+			<textarea class="form-control" name="description" id="" cols="30" rows="10" placeholder="Space description..."></textarea>
+
+	 		<br>
+	 		<br>
+	 		<select name="access" id="">
+	 			<option value="0">Public</option>
+	 			<option value="1">Private</option>
+	 		</select>
+	 		<br>
+	 		<br>
+	 		<label for="">Options</label>
+	 		<div class="options">
+	 			<span><input type="checkbox" name="drive" value="1" checked> Drive</span>
+	 			<span><input type="checkbox" name="wikis" value="1" checked>Wikis</span>
+	 			<span><input type="checkbox" name="tasks" value="1" checked>Tasks</span>
+	 			<span><input type="checkbox" name="chat" value="1" checked>Chat</span>
+	 		</div>
+	 		<br>
+	 		<input type="submit" name="create-new-space" class="btn" id="create-submit-btn" value="Create new space">
+	 		<a href="" class="btn cancel">Cancel</a>
+	 		
+	 	</form>
+</div>
+	
+<!--Jquery section-->
+<script>
+	
+
+	// creater new space box
+	$('button.create-pop').click(function() {
+		var width = $(window).width();
+		var height = $(window).height();
+		var top = ( height - $('div.space-form').height() ) / 2;
+		var left = ( width - $('div.space-form').width() ) / 2;
+		
+		$("div.space-form").animate({height:'toggle'},200);
+		$("div.space-form").css({
+			'z-index'	: '999999999999999999',
+			top			: top + 'px',
+			left		: left + 'px'
+		});
+		var spaceShadow = '<div class="space-shadow"></div>';
+		$('body').prepend(spaceShadow);
+		$('.space-shadow').css({
+			background: 'rgba(0, 0, 0, .3)',
+			width		: width,
+			height		: height,
+			'z-index'	: '99999999999999',
+			position	: 'fixed'
+
+		});
+
+	});
+
+	// Hide create new space poup box
+	$(document).mouseup(function (e)
+	{
+		var container = $("div.space-form");
+
+		if (!container.is(e.target) && container.has(e.target).length === 0)
+		{
+			container.hide();
+			$('body').find('.space-shadow').remove();
+		}
+	});
+
+
+
+	$('a.cancel').click(function(e) {
+		e.preventDefault();
+		$("div.space-form").slideUp(200);
+
+	});
+
+	
+
+
+		//ajax form submit to create a new space
+				/* Attach a submit handler to the form */
+		$("#create-submit-btn").click(function(e) {
+		e.preventDefault();
+    	
+    	/* Clear result div*/
+    	$("#result").html('');
+    	
+    	/* Get some values from elements on the page: */
+    	var values = $('#new-space-form').serialize();
+    
+    	
+    	/* Send the data using post and put the results in a div */
+    	$.ajax({
+        url: "../ajax-server/create-space.php",
+        type: "post",
+        data: values,
+        success: function(data){
+        		if (data === '0') {
+        			$("#result").html('You must provide a space title');
+        			
+        		} else if ( data === '1') {
+        			$("#result").html('Space title already exists');
+        			
+        		} else {
+        			window.location.replace('space-feed.php');
+        		};
+            	 
+            
+         },
+        error:function(){
+            
+            $("#result").html('Error submitting your request. Try again please');
+        }
+    	});
+});//end of ajax request
+
+</script>
